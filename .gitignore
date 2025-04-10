@@ -1,0 +1,81 @@
+# Bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entorno virtual (puede ser venv, env, .env, etc.)
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+*.env
+*.env.*
+
+# Archivos de configuración o secretos
+instance/
+config.py
+*.secret
+*.key
+
+# Base de datos SQLite
+*.sqlite3
+*.db
+
+# Archivos de logs
+*.log
+
+# Archivos de subida o estáticos temporales
+uploads/
+media/
+static/uploads/
+
+# Archivos de compilación
+*.out
+*.o
+*.so
+*.exe
+*.dll
+
+# Archivos de pruebas
+.coverage
+.tox/
+nosetests.xml
+test_*.py
+
+# Carpeta de dist y build
+dist/
+build/
+*.egg-info/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de Mac
+.DS_Store
+
+# Archivos de Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Node.js (si usas npm para frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Flask specific
+*.pid
+instance/
+
+# Pipenv / poetry
+Pipfile.lock
+poetry.lock

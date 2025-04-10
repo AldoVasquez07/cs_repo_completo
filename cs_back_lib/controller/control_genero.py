@@ -1,7 +1,7 @@
 from security.connection import PostgreSQLPool
 from services.serv_genero import ServGenero
 from flask import Blueprint, jsonify
-from security.token import token_required
+from security.auth_token import SecretKeyAuth
 
 
 serv_genero = ServGenero(PostgreSQLPool())
@@ -10,7 +10,7 @@ app_genero = Blueprint("genero", __name__, url_prefix="/genero")
 
 
 @app_genero.route("/", methods=["GET"])
-@token_required
+@SecretKeyAuth.token_required
 def get_generos():
     generos = serv_genero.get_generos()
     data = [{"id":g.id, "nombre":g.nombre} for g in generos]
@@ -18,7 +18,7 @@ def get_generos():
 
 
 @app_genero.route("/<int:id>", methods=["GET"])
-@token_required
+@SecretKeyAuth.token_required
 def get_genero(id):
     genero = serv_genero.get_genero(id)
     
@@ -30,7 +30,7 @@ def get_genero(id):
 
 
 @app_genero.route("/", methods=["POST"])
-@token_required
+@SecretKeyAuth.token_required
 def crear_genero():
     message = serv_genero.insert_genero(
         request.json['nombre']
@@ -39,7 +39,7 @@ def crear_genero():
 
 
 @app_genero.route("/<int:id>", methods=["PUT"])
-@token_required
+@SecretKeyAuth.token_required
 def actualizar_genero(id):
     message = serv_genero.update_genero(
         id,
@@ -50,7 +50,7 @@ def actualizar_genero(id):
     
 
 @app_genero.route("/<int:id>", methods=["DELETE"])
-@token_required
+@SecretKeyAuth.token_required
 def eliminar_autor(id):
     message = serv_genero.delete_genero(id)
     return jsonify({'Mensaje': message})

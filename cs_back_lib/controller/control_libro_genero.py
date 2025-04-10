@@ -1,7 +1,7 @@
 from security.connection import PostgreSQLPool
 from services.serv_libro_genero import ServLibroGenero
 from flask import Blueprint, jsonify, request
-from security.token import token_required
+from security.auth_token import SecretKeyAuth
 
 
 serv_libro_genero = ServLibroGenero(PostgreSQLPool())
@@ -10,7 +10,7 @@ app_libro_genero = Blueprint("libro_genero", __name__, url_prefix="/libro_genero
 
 
 @app_libro_genero.route("/libro_generos/<int:id>", methods=["GET"])
-@token_required
+@SecretKeyAuth.token_required
 def get_libro_generos(id):
     lg = serv_libro_genero.get_libro_generos(id)
     
@@ -34,7 +34,7 @@ def get_libro_generos(id):
 
 
 @app_libro_genero.route("/libro_generos/<int:id>", methods=["PUT"])
-@token_required
+@SecretKeyAuth.token_required
 def update_libro_generos(id):
     message = serv_libro_genero.update_libro_genero(
         id,
@@ -46,7 +46,7 @@ def update_libro_generos(id):
 
 
 @app_libro_genero.route("/genero_libros/<int:id>", methods=["GET"])
-@token_required
+@SecretKeyAuth.token_required
 def get_genero_libros(id):
     lg = serv_libro_genero.get_genero_libros(id)
     
@@ -70,7 +70,7 @@ def get_genero_libros(id):
 
 
 @app_libro_genero.route("/genero_libros/<int:id>", methods=["PUT"])
-@token_required
+@SecretKeyAuth.token_required
 def update_genero_libros(id):
     message = serv_libro_genero.update_genero_libro(
         id,
@@ -82,7 +82,7 @@ def update_genero_libros(id):
 
 
 @app_libro_genero.route("/", methods=["POST"])
-@token_required
+@SecretKeyAuth.token_required
 def insert_libro_genero():
     message = serv_libro_genero.insert_libro_genero(
         request.json['id_libro'],
@@ -93,7 +93,7 @@ def insert_libro_genero():
 
 
 @app_libro_genero.route("/", methods=["DELETE"])
-@token_required
+@SecretKeyAuth.token_required
 def delete_libro_genero():
     message = serv_libro_genero.delete_libro_genero(
         request.json['id_libro'],

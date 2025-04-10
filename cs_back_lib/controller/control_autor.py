@@ -1,7 +1,8 @@
 from security.connection import PostgreSQLPool
 from services.serv_autor import ServAutor
 from flask import Blueprint, jsonify, request
-from security.token import token_required
+from security.auth_token import SecretKeyAuth
+
 
 
 serv_autor = ServAutor(PostgreSQLPool())
@@ -10,7 +11,7 @@ app_autor = Blueprint("autor", __name__, url_prefix="/autor")
 
 
 @app_autor.route("/", methods=["GET"])
-@token_required
+@SecretKeyAuth.token_required
 def get_autores():
     autores = serv_autor.get_autores()
     data = [{'id':a.id, 'cod':a.cod, 'nombre':a.nombre} for a in autores]
@@ -18,7 +19,7 @@ def get_autores():
 
 
 @app_autor.route("/<int:id>", methods=["GET"])
-@token_required
+@SecretKeyAuth.token_required
 def get_autor(id):
     autor = serv_autor.get_autor(id)
     
@@ -30,7 +31,7 @@ def get_autor(id):
 
 
 @app_autor.route("/", methods=["POST"])
-@token_required
+@SecretKeyAuth.token_required
 def crear_autor():
     message = serv_autor.insert_autor(
         request.json['cod'],
@@ -42,7 +43,7 @@ def crear_autor():
 
 
 @app_autor.route("/<int:id>", methods=["PUT"])
-@token_required
+@SecretKeyAuth.token_required
 def actualizar_autor(id):
     message = serv_autor.update_autor(
         id,
@@ -56,7 +57,7 @@ def actualizar_autor(id):
 
 
 @app_autor.route("/<int:id>", methods=["DELETE"])
-@token_required
+@SecretKeyAuth.token_required
 def eliminar_autor(id):
     message = serv_autor.delete_autor(id)
     return jsonify({'Mensaje': message})
