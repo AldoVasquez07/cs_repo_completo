@@ -4,7 +4,7 @@ from psycopg2 import pool
 
 # Leer configuración desde .ini
 config = configparser.ConfigParser()
-config.read('C:/Users/Aldo/Desktop/Semestre 7/Construccion de Software/repositorio_general/CS_2025_A/proy_blueprints/postgres_config.ini')
+config.read('../postgres_config.ini')
 
 dbconfig = {
     "host": config.get("postgresql", "host"),
